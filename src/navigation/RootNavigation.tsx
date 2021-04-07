@@ -22,13 +22,14 @@ export function navigate(name: any, params: any) {
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-export function renderScreen({name, component, options = {}}: RenderProps) {
+export function renderScreen({name, component, options = {}, initialParams = {}}: RenderProps) {
   return (
     <Stack.Screen
       name={name}
       key={name}
       options={options}
       component={component}
+      initialParams={initialParams}
     />
   );
 }
@@ -55,7 +56,7 @@ const RootNavigation: FunctionComponent = () => {
           shadowOpacity: 0,
         },
       }}
-      initialRouteName={count === '2' ? 'AuthScreen' : 'App'}>
+      initialRouteName={count === '2' ? 'AuthScreen' : 'Intro'}>
       {routes.map((route) => {
         return renderScreen(route);
       })}
