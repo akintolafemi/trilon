@@ -57,6 +57,10 @@ const Intro: FunctionComponent<Props> = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
+      <StatusBar
+        backgroundColor='transparent'
+        translucent={true}
+      />
       <ImageBackground
         source={selectedView.source}
         style={{flex: 1, resizeMode: "cover"}}
