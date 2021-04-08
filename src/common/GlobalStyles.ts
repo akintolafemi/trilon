@@ -1,6 +1,7 @@
 import Colors from './Colors';
 
 export default {
+    globalScreenBg: {flex:1, backgroundColor: Colors.white, padding: 20},
     paddingArround: 20,
     inputStyles: {
       borderWidth: 1,
@@ -18,7 +19,7 @@ export default {
     buttonRoundMStyles: {
       backgroundColor: Colors.primaryPurple,
       paddingHorizontal: 15,
-      borderRadius: 20, 
+      borderRadius: 20,
       marginTop: 10
     },
     RNEHeaderContainer: {

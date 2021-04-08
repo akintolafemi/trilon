@@ -4,8 +4,16 @@ import {FunctionComponent} from 'react';
 // routes screens
 import App from '../screens/App';
 import Intro from '../screens/Intro';
+
+//onboard and login screens
 import Onboard from '../screens/Onboard';
 import OnboardMain from '../screens/Onboard/OnboardMain';
+
+//signup screens
+
+import Signup from '../screens/Signup';
+import VerifyMobile from '../screens/Signup/VerifyMobile';
+import EnterOtp from '../screens/Signup/EnterOtp';
 
 export type RenderProps = {
   name: keyof RootStackParamList;
@@ -30,6 +38,7 @@ const randomX = Math.floor(Math.random() * (2 - 0 + 1) + 0);
 export type RootStackParamList = {
   App: undefined;
   Intro: undefined;
+  Signup: undefined;
 };
 
 export const routes: Array<RenderProps> = [
@@ -54,6 +63,30 @@ export const routes: Array<RenderProps> = [
     component: OnboardMain,
     options: {
       headerShown: false
+    },
+  },
+  {
+    name: 'Signup',
+    component: Signup,
+    options: {
+      headerShown: true,
+      title: ''
+    },
+  },
+  {
+    name: 'VerifyMobile',
+    component: VerifyMobile,
+    options: {
+      headerShown: true,
+      title: ''
+    },
+  },
+  {
+    name: 'EnterOtp',
+    component: EnterOtp,
+    options: {
+      headerShown: true,
+      title: ''
     },
   },
 ];

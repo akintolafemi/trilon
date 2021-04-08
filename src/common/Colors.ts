@@ -1,5 +1,6 @@
 const THEME_COLORS = {
     trilon: '#7D36F1',
+    triloneW: '#F5F5F5',
     trilonP: '#C2128C',
     trilonDark: '#4B08B8',
     text: '#4F4F4F',
@@ -9,6 +10,7 @@ const THEME_COLORS = {
     dark: '#3D3D3D',
     whiteOpaq: '#EEEEEE',
     dotcColor: '#667E93',
+    danger: '#ff0000',
     'github-alt': '#000000',
     'google-plus-official': '#dd4b39',
     google: '#dd4b39',
