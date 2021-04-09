@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "237450859900",
+    "project_id": "trilon-3912e",
+    "storage_bucket": "trilon-3912e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:237450859900:android:022c63c3891869fb6b00f9",
+        "android_client_info": {
+          "package_name": "com.trilon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "237450859900-uir2c8mn2lnqqs88ekle08q6uqfnqlcg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trilon",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "237450859900-uhofsh62a2l6seargfqcd5on8o8t7g9e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOrho6vWQpfzJu2XL1saEIxGcUE7RnTCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "237450859900-uhofsh62a2l6seargfqcd5on8o8t7g9e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
