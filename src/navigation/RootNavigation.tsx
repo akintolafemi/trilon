@@ -5,7 +5,7 @@ import {
   createStackNavigator,
 } from '@react-navigation/stack';
 import {RenderProps, RootStackParamList} from './routes';
-import {COUNT} from '../common/Contants';
+import {COUNT} from '../common/Constants';
 import {routes} from './routes';
 import {DrawerActions} from '@react-navigation/native';
 import { Colors } from '../common';
