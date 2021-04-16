@@ -72,6 +72,10 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
         let registerResponse = await API.registerUser(regObj);
         console.log(registerResponse);
         if(registerResponse.user) {
+          const profile = await API.getUserProfile();
+          if (profile !== null) {
+            await AsyncStorage.setItem('trilon_users_profiles', JSON.stringify(profile));
+          }
           await AsyncStorage.setItem('registerResponse', JSON.stringify(registerResponse));
           setIsLoading(false);
           navigation.navigate('VerifyMobile');
@@ -164,9 +168,15 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
               <Text>By clicking on </Text><Text style={{fontWeight: 'bold'}}>sign up,</Text><Text> you agree to the following </Text>
             </View>
             <View style={{flexDirection: 'row'}}>
-              <TouchableOpacity onPress={() => openURLInBrowser('https://idealswift.com')}><Text style={{fontWeight: 'bold'}}>terms and conditions</Text></TouchableOpacity><Text> without reservations</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  //openURLInBrowser('https://idealswift.com');
+                  navigation.navigate('TermsOfUse');
+                }}
+              >
+              <Text style={{fontWeight: 'bold'}}>terms and conditions</Text></TouchableOpacity><Text> without reservations</Text>
             </View>
-            <TouchableOpacity style={{flexDirection: 'row', marginTop: Fonts.h(10)}} onPress={() => navigation.navigate('Onboard')}>
+            <TouchableOpacity style={{flexDirection: 'row', marginTop: Fonts.h(10)}} onPress={() => navigation.navigate('OnboardMain')}>
               <Text style={{color: Colors.dark}}>Have an account?</Text>
               <Text style={{color: Colors.trilon, fontWeight: 'bold'}}> Sign In</Text>
             </TouchableOpacity>

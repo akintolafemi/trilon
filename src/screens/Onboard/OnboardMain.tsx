@@ -1,5 +1,5 @@
 import React, {Component, FunctionComponent, useRef, useState} from 'react';
-import {AppRegistry, SafeAreaView, StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
+import {AppRegistry, Platform, AsyncStorage, SafeAreaView, StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {Colors, Fonts, GlobalStyles} from '../../common';
 import {RootStackParamList} from '../../navigation/routes';
@@ -7,14 +7,24 @@ import {SocialIcon, Button as RNEButton, Icon as RNEIcon, Input as RNEInput} fro
 import { Modalize } from 'react-native-modalize';
 //import Modal from "react-native-simple-modal";
 import OkModal from '../../components/OkModal';
+import ErrorModal from '../../components/ErrorModal';
 type Props = StackScreenProps<RootStackParamList, 'OnboardMain'>;
+
+import {API} from '../../network';
+
 
 const OnboardMain: FunctionComponent<Props> = ({navigation}) => {
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
+  const [errorMessage, setErrormessage] = useState<string>('');
   const modalizeRef = useRef<Modalize>(null);
   const alertRef = useRef<alertRef>(null);
   const [showOkModal, setShowOkModal] = useState<boolean>(false);
   const [modalView, setModalView] = useState<string>('login');
+  const [username, setUsername] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   function openLoginModal() {
 //    setShowOkModal(true);
@@ -34,6 +44,81 @@ const OnboardMain: FunctionComponent<Props> = ({navigation}) => {
     setShowOkModal(false);
   }
 
+  async function handleLogin() {
+    if(username === "") {
+      setErrormessage("Enter your username");
+      setShowErrorModal(true);
+    }
+    else if (password === "") {
+      setErrormessage("Enter your password");
+      setShowErrorModal(true);
+    }
+    else {
+      setIsLoading(true);
+      let login = {
+        email: username,
+        password: password
+      };
+      let response = await API.login(login);
+      setIsLoading(false);
+      if (response.user) {
+        await AsyncStorage.setItem('login_provider', 'app');
+        profile();
+      }
+      else {
+        setIsLoading(false);
+        setErrormessage(response.toString());
+        setShowErrorModal(true);
+      }
+    }
+  }
+
+  async function facebookLogin () {
+    let facebook = await API.facebookLogin();
+    console.log(facebook);
+    if (facebook.name) {
+      await AsyncStorage.setItem('login_provider', 'facebook');
+      await AsyncStorage.setItem('trilon_users_profiles', JSON.stringify(facebook));
+      navigation.navigate('Drawer');
+    }
+    else {
+      setErrormessage(facebook.errorMessage);
+      setShowErrorModal(true);
+    }
+  }
+
+  async function googleLogin () {
+    let facebook = await API.googleLogin();
+    console.log(facebook);
+    if (facebook.user) {
+      await AsyncStorage.setItem('login_provider', 'google');
+      await AsyncStorage.setItem('trilon_users_profiles', JSON.stringify(facebook.user));
+      navigation.navigate('Drawer');
+    }
+    else {
+      setErrormessage(facebook.errorMessage);
+      setShowErrorModal(true);
+    }
+  }
+
+  async function profile() {
+    setIsLoading(true);
+    const profile = await API.getUserProfile();
+    setIsLoading(false);
+    if (profile !== null) {
+      setEmail('');
+      setPassword('');
+      await AsyncStorage.setItem('trilon_users_profiles', JSON.stringify(profile));
+      navigation.navigate('Drawer');
+    }
+    else {
+      console.log("profile is null");
+      setErrormessage('We could not load your profile at the moment');
+      setShowErrorModal(true);
+      navigation.navigate('OnboardMain');
+    }
+  }
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <ImageBackground
@@ -50,34 +135,39 @@ const OnboardMain: FunctionComponent<Props> = ({navigation}) => {
           <Text
             style={{color: Colors.white, fontSize: Fonts.h(20), fontWeight: 'bold',}}
           >Book an appointment for salon, spa, make-up and barbing</Text>
-          <View style={{marginVertical: Fonts.h(40)}}>
-            <RNEButton
-              title='Connect with Google'
-              icon={
-                <RNEIcon
-                  name="google"
-                  type='font-awesome'
-                  size={Fonts.h(15)}
-                  containerStyle={{marginRight: Fonts.h(10)}}
-                  color="white"
-                />
-              }
-              buttonStyle={[styles.socialBtn, {backgroundColor: Colors.google}]}
-            />
-            <RNEButton
-              title='Connect with Facebook'
-              icon={
-                <RNEIcon
-                  name="facebook"
-                  type='font-awesome'
-                  size={15}
-                  containerStyle={{marginRight: Fonts.h(10)}}
-                  color="white"
-                />
-              }
-              buttonStyle={[styles.socialBtn, {backgroundColor: Colors.facebook}]}
-            />
-          </View>
+          {Platform.OS !== 'ios' ? (
+            <View style={{marginVertical: Fonts.h(40)}}>
+              <RNEButton
+                title='Connect with Google'
+                onPress={googleLogin}
+                icon={
+                  <RNEIcon
+                    name="google"
+                    type='font-awesome'
+                    size={Fonts.h(15)}
+                    containerStyle={{marginRight: Fonts.h(10)}}
+                    color="white"
+                  />
+                }
+                buttonStyle={[styles.socialBtn, {backgroundColor: Colors.google}]}
+              />
+              <RNEButton
+                title='Connect with Facebook'
+                onPress={facebookLogin}
+                icon={
+                  <RNEIcon
+                    name="facebook"
+                    type='font-awesome'
+                    size={15}
+                    containerStyle={{marginRight: Fonts.h(10)}}
+                    color="white"
+                  />
+                }
+                buttonStyle={[styles.socialBtn, {backgroundColor: Colors.facebook}]}
+              />
+            </View>
+          ) : null
+          }
           <View
             style={{alignItems: 'center'}}
           >
@@ -118,14 +208,25 @@ const OnboardMain: FunctionComponent<Props> = ({navigation}) => {
                 placeholder='Username'
                 inputContainerStyle={styles.inputContainerStyle}
                 inputStyle={styles.inputStyle}
+                value={username}
+                onChangeText={text => setUsername(text)}
+                returnKeyType="next"
+                keyboardType="default"
               />
               <RNEInput
                 placeholder='Password'
                 inputContainerStyle={styles.inputContainerStyle}
                 inputStyle={styles.inputStyle}
+                value={password}
+                onChangeText={text => setPassword(text)}
+                returnKeyType="done"
+                keyboardType="default"
+                secureTextEntry={true}
               />
               <RNEButton
                 title='Login'
+                loading={isLoading}
+                onPress={() => navigation.navigate('Drawer')}
                 buttonStyle={[styles.socialBtn, {backgroundColor: Colors.trilon, height: Fonts.h(50), marginHorizontal: Fonts.w(10), marginTop: Fonts.h(0)}]}
               />
               <View
@@ -143,6 +244,10 @@ const OnboardMain: FunctionComponent<Props> = ({navigation}) => {
                 placeholder='E-mail'
                 inputContainerStyle={styles.inputContainerStyle}
                 inputStyle={styles.inputStyle}
+                value={email}
+                onChangeText={text => setEmail(text)}
+                returnKeyType="done"
+                keyboardType="default"
               />
               <RNEButton
                 title='Submit'
@@ -161,6 +266,11 @@ const OnboardMain: FunctionComponent<Props> = ({navigation}) => {
           }
         </Modalize>
       </ImageBackground>
+      <ErrorModal
+        message={errorMessage}
+        showModal={showErrorModal}
+        onConfirm={() => setShowErrorModal(false)}
+      />
       <OkModal
         title='Welcome'
         message='Hello.... your message was received'

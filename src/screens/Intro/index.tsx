@@ -1,7 +1,7 @@
 import React, {Component, FunctionComponent, useRef, useState, useEffect} from 'react';
 import {titleName} from '../../../app.json';
 
-import {SafeAreaView, StyleSheet, Text, View, ImageBackground, StatusBar, Image, TouchableWithoutFeedback} from 'react-native';
+import {SafeAreaView, StyleSheet, AsyncStorage, Text, View, ImageBackground, StatusBar, Image, TouchableWithoutFeedback} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {Colors, Fonts} from '../../common';
 import {RootStackParamList} from '../../navigation/routes';
@@ -42,7 +42,7 @@ type Props = StackScreenProps<RootStackParamList, 'Intro'>;
 
 const Intro: FunctionComponent<Props> = ({navigation, route}) => {
   const modalRef = useRef(null);
-  const [selectedView, setSelectedView] = useState<number>(0);
+  const [selectedView, setSelectedView] = useState<Object>(viewList[0]);
   useEffect(() => {
     try {
     //  setSelectedView(viewList[randomX]);
@@ -68,7 +68,10 @@ const Intro: FunctionComponent<Props> = ({navigation, route}) => {
       >
         <View style={selectedView.overlayStyles}></View>
         <TouchableWithoutFeedback
-          onPress={()=>{navigation.navigate('Onboard')}}
+          onPress={async ()=>{
+            await AsyncStorage.setItem('PAGE_COUNT', '2');
+            navigation.navigate('Onboard');
+          }}
         >
           <View
             style={selectedView.styles}

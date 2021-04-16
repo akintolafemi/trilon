@@ -1,3 +1,4 @@
+import { Icon as RNEIcon } from 'react-native-elements';
 import {StackNavigationOptions} from '@react-navigation/stack';
 import {FunctionComponent} from 'react';
 
@@ -14,6 +15,19 @@ import OnboardMain from '../screens/Onboard/OnboardMain';
 import Signup from '../screens/Signup';
 import VerifyMobile from '../screens/Signup/VerifyMobile';
 import EnterOtp from '../screens/Signup/EnterOtp';
+
+//Dashboard Screens
+import BottomTabNavigator from './BottomTabNavigator';
+import Dashboard from '../screens/Dashboard';
+
+
+//Nearby screens
+import Nearby from '../screens/Nearby';
+
+//More Screens
+import MoreNavigation from './DrawerNavigation';
+
+import TermsOfUse from '../screens/More/TermsOfUse';
 
 export type RenderProps = {
   name: keyof RootStackParamList;
@@ -87,6 +101,51 @@ export const routes: Array<RenderProps> = [
     options: {
       headerShown: true,
       title: ''
+    },
+  },
+  {
+    name: 'TermsOfUse',
+    component: TermsOfUse,
+    options: {
+      headerShown: true,
+      title: ''
+    }
+  },
+//  {name: 'DashboardTab', component: BottomTabNavigator, options: {headerShown: false}},
+  {name: 'Drawer', component: MoreNavigation, options: {headerShown: false, gestureEnabled: false}},
+];
+
+export const dashboardRoutes: Array<RenderProps> = [
+  {
+    name: 'Dashboard',
+    component: Dashboard,
+    options: {
+      headerShown: false
+    },
+  },
+];
+
+export type DrawerStackParamList = {
+  More: undefined;
+  DashboardTab: undefined;
+};
+
+export type DrawerRenderProps = {
+  name: keyof DrawerStackParamList;
+  component: FunctionComponent<any>;
+  options: StackNavigationOptions;
+};
+
+
+export const drawerRoutes: Array<DrawerRenderProps> = [
+];
+
+export const nearbyRoutes: Array<RenderProps> = [
+  {
+    name: 'Nearby',
+    component: Nearby,
+    options: {
+      headerShown: false
     },
   },
 ];

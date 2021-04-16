@@ -1,31 +1,32 @@
 import Colors from './Colors';
+import Fonts from './Fonts';
 
 export default {
-    globalScreenBg: {flex:1, backgroundColor: Colors.white, padding: 20},
-    paddingArround: 20,
+    globalScreenBg: {flex:1, backgroundColor: Colors.white, padding: Fonts.h(20)},
+    paddingArround: Fonts.h(20),
     inputStyles: {
-      borderWidth: 1,
+      borderWidth: Fonts.w(1),
       borderColor: Colors.colorGrey,
-      height: 40,
+      height: Fonts.h(40),
       textAlign: 'center',
-      marginVertical: 5,
+      marginVertical: Fonts.h(5),
     },
     buttonStyle: {
       elevation: 15,
-      marginVertical: 5,
-      height: 40,
+      marginVertical: Fonts.h(5),
+      height: Fonts.h(40),
       backgroundColor: Colors.primaryPurple,
     },
     buttonRoundMStyles: {
       backgroundColor: Colors.primaryPurple,
-      paddingHorizontal: 15,
-      borderRadius: 20,
-      marginTop: 10
+      paddingHorizontal: Fonts.w(15),
+      borderRadius: Fonts.h(20),
+      marginTop: Fonts.h(10)
     },
     RNEHeaderContainer: {
       backgroundColor: Colors.colorWhite,
-      height: 120,
+      height: Fonts.h(120),
     },
-    buttonPaddingH: 15,
-    buttonRadius: 20,
+    buttonPaddingH: Fonts.h(15),
+    buttonRadius: Fonts.h(20),
 };

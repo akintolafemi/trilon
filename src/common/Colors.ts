@@ -1,8 +1,11 @@
 const THEME_COLORS = {
     trilon: '#7D36F1',
-    triloneW: '#F5F5F5',
+    triloneW: '#F9FAFC',
     trilonP: '#C2128C',
+    trilonO: '#DC6A00',
+    trilonG: '#4A984D',
     trilonDark: '#4B08B8',
+    inputBg: '#F5F5F5',
     text: '#4F4F4F',
     darkText: '#4B4B4B',
     black: '#000000',
@@ -42,6 +45,7 @@ const THEME_COLORS = {
     weibo: '#e6162d',
     wordpress: '#21759b',
     youtube: '#bb0000',
+    background: '#F9FAFC'
 }
 export default {
     ...THEME_COLORS
