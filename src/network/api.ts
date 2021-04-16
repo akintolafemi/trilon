@@ -60,6 +60,73 @@ async function login(data: LoginRequest): Promise<any> {
   }
 }
 
+async function facebookLogin() {
+  try {
+    var provider = new firebase.auth.FacebookAuthProvider();
+    provider.setCustomParameters({
+      'display': 'popup'
+    });
+    firebase
+    .auth()
+    .signInWithPopup(provider)
+    .then((result) => {
+      /** @type {firebase.auth.OAuthCredential} */
+      var credential = result.credential;
+
+      // The signed-in user info.
+      var user = result.user;
+
+      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+      var accessToken = credential.accessToken;
+
+      // ...
+      return result;
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+
+      // ...
+      return error;
+    });
+  }
+  catch (e) {
+    console.log(e);
+  }
+}
+
+async function googleLogin() {
+  var provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth()
+  .signInWithPopup(provider)
+  .then((result) => {
+    /** @type {firebase.auth.OAuthCredential} */
+    var credential = result.credential;
+
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = credential.accessToken;
+    // The signed-in user info.
+    var user = result.user;
+    return result;
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // The email of the user's account used.
+    var email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    var credential = error.credential;
+    return error;
+    // ...
+  });
+}
+
 async function registerUser(data: RegisterRequest): Promise<any> {
   try {
     const response = await firebase.auth().createUserWithEmailAndPassword(data.email, data.password);
@@ -157,11 +224,31 @@ function verifyToken(data: TokenRequest): Promise<NetworkResponse> {
   });
 }
 
+async function getUserProfile(): Promise<any> {
+  let currentUserUID = firebase.auth().currentUser.uid;
+
+  let doc = await firebase
+      .firestore()
+      .collection('trilon_users_profiles')
+      .doc(currentUserUID)
+      .get();
+
+  if (!doc.exists){
+    return null;
+  } else {
+    let profileObj = doc.data();
+    return profileObj;
+  }
+}
+
 export default {
   login,
+  facebookLogin,
+  googleLogin,
   registerUser,
   sendTokenMobile,
   verifyTokenMobile,
   sendToken,
-  verifyToken
+  verifyToken,
+  getUserProfile,
 }

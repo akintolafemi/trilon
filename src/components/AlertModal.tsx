@@ -24,7 +24,7 @@ import {
   ImageStyle,
 } from 'react-native';
 import { Fonts } from '../common';
-
+import {Icon as RNEIcon} from 'react-native-elements';
 const {height, width} = Dimensions.get('window');
 
 type Props = {
@@ -57,11 +57,14 @@ type Props = {
   alertContainerStyle?: StyleProp<ViewStyle>;
   image?: ImageSourcePropType;
   imageStyle?: StyleProp<ImageStyle>;
+  icon?: any;
+  iconStyle: any;
 };
 
 export interface alertRef {
   toggle(): void;
   showModal(obj: {title: string; message: string}): void;
+  closeModal(): void;
 }
 
 // TODO: Add on close ref
@@ -108,6 +111,8 @@ const AlertModal: ForwardRefRenderFunction<alertRef, Props> = (
   const springValue = useRef(new Animated.Value(0.3)).current;
   const [showSelf, setShowSelf] = useState(false);
   const [showState, setShowState] = useState(true);
+  const [icon, setIcon] = useState<any>(null);
+  const [iconStyle, setIconStyle] = useState<any>(null);
   const [messageState, setMessageState] = useState<string | undefined>('');
   const [titleState, setTitleState] = useState<string | undefined>('');
 
@@ -136,11 +141,20 @@ const AlertModal: ForwardRefRenderFunction<alertRef, Props> = (
     showModal: (data) => {
       setMessageState(data.message);
       setTitleState(data.title);
+      if(data.icon)
+        setIcon(data.icon);
+      if (data.iconStyle)
+        setIconStyle(data.iconStyle);
       setShowSelf(true);
       // setShowState(true);
       setTimeout(() => {
         springShow(true);
       }, 100);
+    },
+
+    closeModal: () => {
+      setShowSelf(false);
+      // setShowState(true);
     },
   }));
 
@@ -281,6 +295,7 @@ const AlertModal: ForwardRefRenderFunction<alertRef, Props> = (
               <ActivityIndicator size={progressSize} color={progressColor} />
             ) : null}
             {image ? <Image style={[imageStyle]} source={image} /> : null}
+            {icon ? <RNEIcon name={icon} iconStyle={[{fontSize: Fonts.h(50)}, iconStyle]} /> : null}
             {titleState ? (
               <Text
                 style={[

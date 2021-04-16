@@ -23,6 +23,7 @@ const EnterOtp: FunctionComponent<Props> = ({navigation, route}) => {
   const [okMessage, setOkMessage] = useState<string>('');
   const [code, setCode] = useState<string>('');
   const [timerText, setTimerText] = useState<string>('');
+  const [count, setCount] = useState<string>('');
   const [mobile] = useState<string>(route.params.mobile);
 
   useEffect(() => {
@@ -73,6 +74,7 @@ const EnterOtp: FunctionComponent<Props> = ({navigation, route}) => {
           setOkMessage("Mobile number verification was successful");
           setIsLoading(false);
           setShowOkModal(true);
+          setCount('1');
         }
         else {
           setIsLoading(false);
@@ -108,12 +110,12 @@ const EnterOtp: FunctionComponent<Props> = ({navigation, route}) => {
           }}
           containerStyle={{alignItems: 'center'}}
         />
-        <View style={{marginTop: Fonts.h(20), marginHorizontal: Fonts.w(30)}}>
+        <View style={{marginTop: Fonts.h(20), marginHorizontal: Fonts.w(10)}}>
           <Text style={{marginBottom: Fonts.h(20), textAlign: 'center'}}>Verification code was sent to your mobile number endind in {route.params.numLock}</Text>
           <OtpInput
-            boxCount={4}
+            boxCount={6}
             onChange={(code) => {
-              if (code.length === 4) {
+              if (code.length === 6) {
                 handleSubmitCode(code);
               }
             }}
@@ -127,16 +129,20 @@ const EnterOtp: FunctionComponent<Props> = ({navigation, route}) => {
             <TouchableOpacity
               style={{alignSelf: 'center', marginTop: Fonts.h(20)}}
             >
-              <Text>{timerText}</Text>
+              <Text style={{color: Colors.darkText, fontWeight: 'bold'}}>{timerText}</Text>
             </TouchableOpacity>
           ) :
             (
-              <TouchableOpacity
-                onPress={handleGetNewCode}
-                style={{alignSelf: 'center', marginTop: Fonts.h(20)}}
-              >
-                <Text>Didn't get code?</Text>
-              </TouchableOpacity>
+              <View style={{marginTop: Fonts.h(20), alignItems: 'center'}}>
+                <Text style={{color: Colors.darkText, fontWeight: 'bold'}}>Didn't get code?</Text>
+                <TouchableOpacity
+                  onPress={handleGetNewCode}
+                  style={{color: Colors.trilon}}
+                >
+                  <Text style={{color: Colors.trilon, fontWeight: 'bold'}}>Request new code</Text>
+                </TouchableOpacity>
+              </View>
+
             )
           }
         </View>
@@ -149,7 +155,11 @@ const EnterOtp: FunctionComponent<Props> = ({navigation, route}) => {
       <OkModal
         message={okMessage}
         showModal={showOkModal}
-        onConfirm={() => setShowOkModal(false)}
+        onConfirm={() => {
+          setShowOkModal(false);
+          if (count === '1')
+            navigation.navigate('DashboardTab');
+        }}
       />
     </SafeAreaView>
   );

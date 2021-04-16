@@ -72,14 +72,14 @@ const OtpInput = ({onChange, label, boxCount = 5}: {onChange?: (t: string) => vo
         <View
           key={index}
           style={{
-            height: Fonts.w(50),
-            width: Fonts.w(50),
+            height: Fonts.w(40),
+            width: Fonts.w(40),
             alignItems: 'center',
             justifyContent: 'center',
             borderWidth: 1,
             borderColor: Colors.darkText,
             backgroundColor: Colors.white,
-            borderRadius: Fonts.w(50),
+            borderRadius: Fonts.w(40),
           }}>
           <TextInput
             ref={ref}

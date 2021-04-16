@@ -5,7 +5,7 @@ import {
   createStackNavigator,
 } from '@react-navigation/stack';
 import {RenderProps, RootStackParamList} from './routes';
-import {COUNT} from '../common/Constants';
+import {PAGE_COUNT} from '../common/Constants';
 import {routes} from './routes';
 import {DrawerActions} from '@react-navigation/native';
 import { Colors } from '../common';
@@ -35,10 +35,10 @@ export function renderScreen({name, component, options = {}, initialParams = {}}
 }
 
 const RootNavigation: FunctionComponent = () => {
-  const [count, setCount] = useState<string | undefined | null>(null);
+  const [pageCount, setPageCount] = useState<string | undefined | null>(null);
   useEffect(() => {
     try {
-      AsyncStorage.getItem(COUNT).then((cn) => setCount(cn));
+      AsyncStorage.getItem(PAGE_COUNT).then((cn) => setPageCount(cn));
     } catch (error) {
       console.log('Count read error', error);
     }
@@ -56,7 +56,7 @@ const RootNavigation: FunctionComponent = () => {
           shadowOpacity: 0,
         },
       }}
-      initialRouteName={count === '2' ? 'AuthScreen' : 'Intro'}>
+      initialRouteName={pageCount === '2' ? 'OnboardMain' : 'Intro'}>
       {routes.map((route) => {
         return renderScreen(route);
       })}

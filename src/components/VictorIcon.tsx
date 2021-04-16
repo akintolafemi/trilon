@@ -20,15 +20,15 @@ const VectorIcon: FunctionComponent<{
         name={name}
         size={size}
         color={
-          focused ? Colors.primaryColor : color ? color : Colors.lineBorder
+          focused ? Colors.trilon : color ? color : Colors.darkText
         }
         {...style}
       />
       {!!label? <Text
         style={{
-          color: focused ? Colors.primaryColor : Colors.lineBorder,
+          color: focused ? Colors.trilon : Colors.darkText,
           fontSize: Fonts.w(12),
-          borderBottomColor: focused ? Colors.primaryColor : Colors.lineBorder,
+          borderBottomColor: focused ? Colors.trilon : Colors.darkText,
         }}>
         {label}
       </Text>: null}
