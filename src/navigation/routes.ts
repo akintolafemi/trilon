@@ -24,6 +24,10 @@ import Dashboard from '../screens/Dashboard';
 //Nearby screens
 import Nearby from '../screens/Nearby';
 
+
+//salon screens
+import Salon from '../screens/Salon';
+
 //More Screens
 import MoreNavigation from './DrawerNavigation';
 
@@ -109,6 +113,13 @@ export const routes: Array<RenderProps> = [
     options: {
       headerShown: true,
       title: ''
+    }
+  },
+  {
+    name: 'Salon',
+    component: Salon,
+    options: {
+      headerShown: false,
     }
   },
 //  {name: 'DashboardTab', component: BottomTabNavigator, options: {headerShown: false}},
