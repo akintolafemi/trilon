@@ -39,11 +39,13 @@ const imageList = [
 
 const salonsImages = [
   {
+    id: '1',
     source: require('../../assets/images/splash1.jpg'),
     label: 'Label X',
     rating: '3.5',
     address: 'Shop 123, Agbowo complex, Ibadan'
   },{
+    id: '2',
     source: require('../../assets/images/splash2.jpg'),
     label: 'Label Y',
     rating: '4.0',
@@ -73,7 +75,7 @@ const Dashboard: FunctionComponent<Props> = ({navigation, route}) => {
     } catch (err) {
       console.warn(err);
     }
-  }, [route]);
+  }, []);
 
   async function handleLocationAllow() {
     if (Platform.OS === 'ios') {
@@ -215,6 +217,7 @@ const Dashboard: FunctionComponent<Props> = ({navigation, route}) => {
                 label={item.label}
                 address={item.address}
                 rating={item.rating}
+                press={() => navigation.navigate('Salon', {salonId: item.id})}
               />
             )}
             keyExtractor={(item, index) => index.toString()}

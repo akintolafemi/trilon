@@ -46,6 +46,7 @@ const SalonViewListComponent: FunctionComponent<Props> = ({
           <RNEButton
             title="View"
             titleStyle={{fontSize: Fonts.h(12)}}
+            onPress={press}
             buttonStyle={{backgroundColor: Colors.trilonO, height: Fonts.h(30), paddingHorizontal: Fonts.w(20), marginTop: Fonts.h(5), marginBottom: Fonts.h(0)}}
           />
         </View>

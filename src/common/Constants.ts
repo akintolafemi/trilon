@@ -2,6 +2,7 @@ import {Colors} from '../common';
 export const TOKEN = 'TOKEN';
 export const PAGE_COUNT = 'PAGE_COUNT';
 export const DIAL_CODE = '+234';
+export const MAPSTOKEN = 'sk.eyJ1IjoiZm1qIiwiYSI6ImNrbmtwMTJnbDBkOTEyb28weTU0dzdkb20ifQ.nNL8PoSHkJyAzov7ZviH5A';
 
 export const TopServices = [
   {

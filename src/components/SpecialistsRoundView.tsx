@@ -4,14 +4,15 @@ import {Colors, Fonts} from '../common';
 
 type Props = {
   source?: string;
-  label?: string;
-  color?: string;
+  name?: string;
+  alias?: string;
   press?: Function
 };
 
 const SpecialistsRoundViewComponent: FunctionComponent<Props> = ({
   source,
   name,
+  alias,
   press
 }) => {
   return (
@@ -21,6 +22,7 @@ const SpecialistsRoundViewComponent: FunctionComponent<Props> = ({
       </View>
       <View style={{marginTop: Fonts.h(5), alignItems: 'center'}}>
         <Text style={{fontWeight: 'bold', fontSize: Fonts.h(12), color: Colors.darkText}}>{name}</Text>
+        <Text style={{fontWeight: '200', fontSize: Fonts.h(10), color: Colors.darkText}}>{alias}</Text>
       </View>
     </TouchableOpacity>
   );

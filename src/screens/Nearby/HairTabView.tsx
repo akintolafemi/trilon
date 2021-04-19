@@ -61,33 +61,38 @@ const HairTabView: FunctionComponent<Props> = ({navigation, route}) => {
 
   const salonsImages = [
     {
+      id: '1',
       source: require('../../assets/images/splash1.jpg'),
       label: 'Label X',
       rating: '3.5',
       address: 'Shop 123, Agbowo complex, Ibadan'
     },{
+      id: '2',
       source: require('../../assets/images/splash2.jpg'),
       label: 'Label Y',
       rating: '4.0',
       address: 'Address number 2, state Zee...'
     },
     {
+      id: '3',
       source: require('../../assets/images/splash1.jpg'),
       label: 'Label X',
       rating: '3.5',
       address: 'Shop 123, Agbowo complex, Ibadan'
     },{
+      id: '4',
       source: require('../../assets/images/splash2.jpg'),
       label: 'Label Y',
       rating: '4.0',
       address: 'Address number 2, state Zee...'
-    },
-    {
+    },{
+      id: '5',
       source: require('../../assets/images/splash1.jpg'),
       label: 'Label X',
       rating: '3.5',
       address: 'Shop 123, Agbowo complex, Ibadan'
     },{
+      id: '6',
       source: require('../../assets/images/splash2.jpg'),
       label: 'Label Y',
       rating: '4.0',
@@ -148,6 +153,7 @@ const HairTabView: FunctionComponent<Props> = ({navigation, route}) => {
               label={item.label}
               address={item.address}
               rating={item.rating}
+              press={() => navigation.navigate('Salon', {salonId: item.id})}
             />
           )}
           keyExtractor={(item, index) => index.toString()}
@@ -176,6 +182,7 @@ const HairTabView: FunctionComponent<Props> = ({navigation, route}) => {
                 label={item.label}
                 address={item.address}
                 rating={item.rating}
+                press={() => navigation.navigate('Salon', {salonId: item.id})}
               />
             )}
             keyExtractor={(item, index) => index.toString()}

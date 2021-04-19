@@ -85,7 +85,7 @@ const Nearby: FunctionComponent<Props> = ({navigation, route}) => {
       />
       <View style={{flex: 1, paddingTop: Fonts.h(50), paddingBottom: Fonts.h(10)}}>
         <View style={{paddingHorizontal: Fonts.w(15)}}>
-        <Text style={{color: Colors.darkText, fontSize: Fonts.h(12)}}>Your location</Text>
+          <Text style={{color: Colors.darkText, fontSize: Fonts.h(12)}}>Your location</Text>
           <View style={{flexDirection: 'row', alignItems: 'center', marginTop: Fonts.h(2)}}>
             <RNEIcon name="location" type='ionicon' color={Colors.trilonO} size={Fonts.h(15)} />
             <Text style={{fontWeight: 'bold', marginHorizontal: Fonts.w(5)}}>Agbowo, Ibadan</Text>
@@ -115,19 +115,19 @@ const Nearby: FunctionComponent<Props> = ({navigation, route}) => {
             showLeadingSpace={false}
           >
             <TabScreen label="Hairstyle">
-              <HairTabView />
+              <HairTabView navigation={navigation} />
             </TabScreen>
             <TabScreen label="Facial">
-              <HairTabView />
+              <HairTabView navigation={navigation} />
             </TabScreen>
             <TabScreen label="Trimming" >
-              <HairTabView />
+              <HairTabView navigation={navigation} />
             </TabScreen>
             <TabScreen label="Shaving" >
-              <HairTabView />
+              <HairTabView navigation={navigation} />
             </TabScreen>
             <TabScreen label="Pedicure" >
-              <HairTabView />
+              <HairTabView navigation={navigation} />
             </TabScreen>
           </Tabs>
         </View>
