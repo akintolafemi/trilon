@@ -14,6 +14,7 @@ import TopServicesViewComponent from '../../components/TopServicesView';
 import SalonViewComponent from '../../components/SalonView';
 import {TopServices} from '../../common/Constants';
 import ScrollableContainer from '../../components/ScrollableContainer';
+import {DashboardParamList} from '../../navigation/BottomTabNavigator';
 
 type Props = StackScreenProps<DashboardParamList, 'Dashboard'>;
 
@@ -108,54 +109,54 @@ const Dashboard: FunctionComponent<Props> = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: Colors.white}}>
-      <View style={{}}>
-        <ImageBackground
-          source={dashboardImg.source}
-          style={{height: Fonts.h(300), resizeMode: "cover"}}
-          imageStyle={{resizeMode: 'cover', borderBottomLeftRadius: Fonts.w(40), borderBottomRightRadius: Fonts.w(40)}}
-        >
-          <View style={dashboardImg.overlayStyles}></View>
-          <Header
-            statusBarProps={{ barStyle: 'light-content' }}
-            barStyle="light-content" // or directly
-            backgroundColor='transparent'
-            translucent={true}
-            leftComponent={
-              <TouchableOpacity
-                onPress={navigation.openDrawer}
-              >
-                <RNEIcon name="menu" color={Colors.white} size={Fonts.h(30)} />
-              </TouchableOpacity>
-            }
-            containerStyle={{
-              justifyContent: 'space-around',
-              borderBottomWidth: Fonts.h(0)
-            }}
-          />
-          <View style={{flex: 1, justifyContent: 'flex-end', marginHorizontal: Fonts.w(10)}}>
-            <TitleLabel
-              title="Find and book best services"
-              textStyle={{
-                fontWeight: 'bold',
-                fontSize: Fonts.h(20),
-                color: Colors.white,
-                marginHorizontal: Fonts.w(10),
-                marginBottom: Fonts.h(10)
+      <ScrollableContainer style={{flex: 1, marginBottom: Fonts.h(15)}} contentContainerStyle={{}} noPadding={true}>
+        <View style={{}}>
+          <ImageBackground
+            source={dashboardImg.source}
+            style={{height: Fonts.h(300), resizeMode: "cover"}}
+            imageStyle={{resizeMode: 'cover', borderBottomLeftRadius: Fonts.w(40), borderBottomRightRadius: Fonts.w(40)}}
+          >
+            <View style={dashboardImg.overlayStyles}></View>
+            <Header
+              statusBarProps={{ barStyle: 'light-content' }}
+              barStyle="light-content" // or directly
+              backgroundColor='transparent'
+              translucent={true}
+              leftComponent={
+                <TouchableOpacity
+                  onPress={navigation.openDrawer}
+                >
+                  <RNEIcon name="menu" color={Colors.white} size={Fonts.h(30)} />
+                </TouchableOpacity>
+              }
+              containerStyle={{
+                justifyContent: 'space-around',
+                borderBottomWidth: Fonts.h(0)
               }}
             />
-            <RNEInput
-              leftIcon={{ type: 'ionicon', name: 'search-outline', color: Colors.darkText, size: Fonts.h(20) }}
-              placeholder='Search salon, spa and barber'
-              inputContainerStyle={styles.inputContainerStyle}
-              inputStyle={styles.inputStyle}
-              returnKeyType="done"
-              keyboardType="default"
-              secureTextEntry={true}
-            />
-          </View>
-        </ImageBackground>
-      </View>
-      <ScrollableContainer style={{flex: 1, marginBottom: Fonts.h(15)}} contentContainerStyle={{}} noPadding={true}>
+            <View style={{flex: 1, justifyContent: 'flex-end', marginHorizontal: Fonts.w(10)}}>
+              <TitleLabel
+                title="Find and book best services"
+                textStyle={{
+                  fontWeight: 'bold',
+                  fontSize: Fonts.h(20),
+                  color: Colors.white,
+                  marginHorizontal: Fonts.w(10),
+                  marginBottom: Fonts.h(10)
+                }}
+              />
+              <RNEInput
+                leftIcon={{ type: 'ionicon', name: 'search-outline', color: Colors.darkText, size: Fonts.h(20) }}
+                placeholder='Search salon, spa and barber'
+                inputContainerStyle={styles.inputContainerStyle}
+                inputStyle={styles.inputStyle}
+                returnKeyType="done"
+                keyboardType="default"
+                secureTextEntry={true}
+              />
+            </View>
+          </ImageBackground>
+        </View>
         <View style={styles.sectionContainer}>
           <TitleLabel
             title="Available Categories"
@@ -187,10 +188,10 @@ const Dashboard: FunctionComponent<Props> = ({navigation, route}) => {
         </View>
         <View style={styles.sectionContainer}>
           <View
-            style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}
+            style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: Fonts.h(25)}}
           >
             <TitleLabel
-              title="Best Salon"
+              title="Best Salons"
               textStyle={{
                 fontWeight: 'bold',
                 fontSize: Fonts.h(20),
@@ -198,14 +199,14 @@ const Dashboard: FunctionComponent<Props> = ({navigation, route}) => {
               }}
               containerStyle={{
                 marginLeft: Fonts.w(5),
-                marginTop: Fonts.h(10),
                 marginBottom: Fonts.h(5)
               }}
             />
             <TouchableOpacity
               style={{color: Colors.darkText}}
+              onPress={() => navigation.navigate('ViewAll', {optionTitle: 'Best Salons'})}
             >
-              <Text>View all</Text>
+              <Text style={{color: Colors.darkText, fontSize: Fonts.h(12)}}>View all</Text>
             </TouchableOpacity>
           </View>
           <FlatList
@@ -217,6 +218,47 @@ const Dashboard: FunctionComponent<Props> = ({navigation, route}) => {
                 label={item.label}
                 address={item.address}
                 rating={item.rating}
+                imageStyle={{height: Fonts.h(120)}}
+                press={() => navigation.navigate('Salon', {salonId: item.id})}
+              />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
+        <View style={styles.sectionContainer}>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: Fonts.h(25)}}
+          >
+            <TitleLabel
+              title="Best Spa"
+              textStyle={{
+                fontWeight: 'bold',
+                fontSize: Fonts.h(20),
+                color: Colors.darkText
+              }}
+              containerStyle={{
+                marginLeft: Fonts.w(5),
+                marginBottom: Fonts.h(5)
+              }}
+            />
+            <TouchableOpacity
+              style={{color: Colors.darkText}}
+              onPress={() => navigation.navigate('ViewAll', {optionTitle: 'Best Spa'})}
+            >
+              <Text style={{color: Colors.darkText, fontSize: Fonts.h(12)}}>View all</Text>
+            </TouchableOpacity>
+          </View>
+          <FlatList
+            data={salonsImages}
+            horizontal={true}
+            renderItem={({ item }) => (
+              <SalonViewComponent
+                source={item.source}
+                label={item.label}
+                address={item.address}
+                rating={item.rating}
+                imageStyle={{height: Fonts.h(120)}}
                 press={() => navigation.navigate('Salon', {salonId: item.id})}
               />
             )}

@@ -16,21 +16,14 @@ const Onboard: FunctionComponent<Props> = ({navigation}) => {
   const swipeList = [
     {
       source: require('../../assets/images/onboard.jpg'),
-      subject: 'Find and Book Services',
-      description: 'Find and book baber, beauty, salon and spa services anywhere, anytime',
-      buttonTitle: 'Next',
-      press: () => {setSwipperIndex(swipperIndex + 1)}
-    },
-    {
-      source: require('../../assets/images/splash3.jpg'),
-      subject: 'Wear the Look that Makes You Glow',
-      description: 'Choose from your favourite salon, baber shop to rock your styles',
+      subject: 'Book Services',
+      description: 'Book services: salon, spa, barbing, ... from anywhere and anytime',
       buttonTitle: 'Next',
       press: () => {setSwipperIndex(swipperIndex + 1)}
     },
     {
       source: require('../../assets/images/get-started.jpg'),
-      subject: 'Style that Fits your Lifestyle',
+      subject: 'Style that Fit your Lifestyle',
       description: 'Choose from our make-up special offers and packages that fit your lifestyle',
       buttonTitle: 'Get Started',
       press: () => {navigation.navigate('OnboardMain')}

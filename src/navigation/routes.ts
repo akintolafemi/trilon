@@ -27,6 +27,20 @@ import Nearby from '../screens/Nearby';
 
 //salon screens
 import Salon from '../screens/Salon';
+import ViewAll from '../screens/Salon/ViewAll';
+import FilterSalons from '../screens/Salon/FilterSalons';
+
+
+//specialist screens
+import Specialist from '../screens/Specialist';
+
+
+//appointment screens
+import Book from '../screens/Appointment/Book';
+
+//inbox screens
+import Inbox from '../screens/Inbox';
+import ChatScreen from '../screens/Inbox/ChatScreen';
 
 //More Screens
 import MoreNavigation from './DrawerNavigation';
@@ -57,6 +71,9 @@ export type RootStackParamList = {
   App: undefined;
   Intro: undefined;
   Signup: undefined;
+  Salon: undefined;
+  ViewAll: undefined;
+  FilterSalons: undefined;
 };
 
 export const routes: Array<RenderProps> = [
@@ -122,6 +139,46 @@ export const routes: Array<RenderProps> = [
       headerShown: false,
     }
   },
+  {
+    name: 'Specialist',
+    component: Specialist,
+    options: {
+      headerShown: false,
+    }
+  },
+  {
+    name: 'ChatScreen',
+    component: ChatScreen,
+    options: {
+      headerShown: true,
+      title: 'Chat',
+    },
+  },
+  {
+    name: 'BookAppointment',
+    component: Book,
+    options: {
+      headerShown: false
+    },
+  },
+  {
+    name: 'ViewAll',
+    component: ViewAll,
+    options: {
+      headerShown: true,
+      title: '',
+      headerBackTitleVisible: false,
+      headerTitleStyle: {
+      }
+    },
+  },
+  {
+    name: 'FilterSalons',
+    component: FilterSalons,
+    options: {
+      headerShown: false,
+    },
+  },
 //  {name: 'DashboardTab', component: BottomTabNavigator, options: {headerShown: false}},
   {name: 'Drawer', component: MoreNavigation, options: {headerShown: false, gestureEnabled: false}},
 ];
@@ -157,6 +214,22 @@ export const nearbyRoutes: Array<RenderProps> = [
     component: Nearby,
     options: {
       headerShown: false
+    },
+  },
+];
+
+export const inboxRoutes: Array<RenderProps> = [
+  {
+    name: 'Inbox',
+    component: Inbox,
+    options: {
+      headerShown: true,
+      title: 'Messages',
+      headerBackTitleVisible: false,
+      headerLeft: null,
+      headerTitleStyle: {
+        alignSelf: "center"
+      }
     },
   },
 ];

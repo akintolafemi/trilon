@@ -233,10 +233,13 @@ const OnboardMain: FunctionComponent<Props> = ({navigation}) => {
                 style={{alignItems: 'center', marginTop: Fonts.h(10)}}
               >
                 <TouchableOpacity style={{flexDirection: 'row'}} onPress={openPasswordModal}>
-                  <Text style={{color: Colors.trilon}}>Forgot password?</Text>
+                  <Text style={{color: Colors.dark}}>Forgot password?</Text>
                 </TouchableOpacity>
+                <View style={{marginTop: Fonts.h(50), flexDirection: 'row'}}>
+                  <Text>Don't have an account? </Text><TouchableOpacity onPress={() => navigation.navigate('Signup')}><Text style={{color: Colors.trilon}}>Sign up</Text></TouchableOpacity>
+                </View>
               </View>
-              <View style={{marginBottom: Fonts.h(100)}}></View>
+              <View style={{marginBottom: Fonts.h(50)}}></View>
             </KeyboardAvoidingView>
           ) : (
             <KeyboardAvoidingView behavior="padding" style={{paddingHorizontal: 10}}>
@@ -260,7 +263,7 @@ const OnboardMain: FunctionComponent<Props> = ({navigation}) => {
                   <Text style={{color: Colors.trilon}}>Back to login?</Text>
                 </TouchableOpacity>
               </View>
-              <View style={{marginBottom: Fonts.h(100)}}></View>
+              <View style={{marginBottom: Fonts.h(50)}}></View>
             </KeyboardAvoidingView>
           )
           }
@@ -293,7 +296,7 @@ const styles = StyleSheet.create({
   inputStyle: {fontSize: Fonts.h(15)},
   modaltitleView: {alignItems: 'center', marginBottom: Fonts.h(40), paddingHorizontal: Fonts.h(20)},
   modaltitle: {color: Colors.black, fontSize: Fonts.h(30), fontWeight: 'bold'},
-  modalSubtitle: {color: Colors.dark, fontSize: Fonts.h(20), textAlign: 'center'},
+  modalSubtitle: {color: Colors.darkText, fontSize: Fonts.h(15), textAlign: 'center'},
 });
 
 export default OnboardMain;

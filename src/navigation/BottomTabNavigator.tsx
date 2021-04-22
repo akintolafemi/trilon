@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import {Colors, Fonts} from '../common';
-import {dashboardRoutes, nearbyRoutes} from './routes';
+import {dashboardRoutes, nearbyRoutes, inboxRoutes} from './routes';
 
 export type BottomTabParamList = {
   Dashboard: undefined;
@@ -18,6 +18,12 @@ export type DashboardParamList = {
 export type NearbyParamList = {
   Nearby: undefined;
   HairTabView: undefined;
+  ViewAll: undefined;
+}
+
+export type InboxParamList = {
+  Inbox: undefined;
+  ChatScreen: undefined;
 }
 
 function renderScreen({name, component, options = {}}: RenderProps) {
@@ -64,7 +70,7 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="InboxNavigator"
-        component={DashboardNavigator}
+        component={InboxNavigator}
         options={{
           title: 'Inbox',
           tabBarIcon: ({ color }) => <TabBarIcon name="chatbox-ellipses-outline" color={color} />,
@@ -137,5 +143,17 @@ function NearbyNavigator() {
         return renderScreen(route);
       })}
     </NearbyStack.Navigator>
+  );
+}
+
+const InboxStack = createStackNavigator<InboxParamList>();
+
+function InboxNavigator() {
+  return (
+    <InboxStack.Navigator>
+      {inboxRoutes.map((route) => {
+        return renderScreen(route);
+      })}
+    </InboxStack.Navigator>
   );
 }
