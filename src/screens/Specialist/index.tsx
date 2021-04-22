@@ -4,7 +4,7 @@ import {titleName} from '../../../app.json';
 import {SafeAreaView, PermissionsAndroid, Share, Linking, Platform, StyleSheet, Text, View, ImageBackground, StatusBar, Image, TouchableOpacity, FlatList} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {Colors, Fonts} from '../../common';
-import {Header, Icon as RNEIcon, Card as RNECard, Button as RNEButton} from 'react-native-elements';
+import {Header, Icon as RNEIcon, Card as RNECard, Button as RNEButton, Avatar} from 'react-native-elements';
 import TitleLabel from '../../components/TitleLabel';
 import AlertModal from '../../components/AlertModal';
 import ErrorModal from '../../components/ErrorModal';
@@ -15,7 +15,7 @@ import {TopServices} from '../../common/Constants';
 import ScrollableContainer from '../../components/ScrollableContainer';
 import openURLInBrowser from 'react-native/Libraries/Core/Devtools/openURLInBrowser';
 import SpecialistsRoundViewComponent from '../../components/SpecialistsRoundView';
-import SalonAboutViewComponent from '../../components/SalonAboutView';
+import SpecialistViewComponent from '../../components/SpecialistView';
 import SalonServicesViewComponent from '../../components/SalonServicesView';
 import MasonryList from "react-native-masonry-list";
 import {openDrawer} from '../../navigation/RootNavigation';
@@ -24,7 +24,6 @@ import RenderRatings from '../../functions/RenderRatings';
 import Line from '../../components/Line';
 import TimeAgo from '../../functions/TimeAgo';
 import WriteReviewComponent from '../../components/WriteReview';
-import {RootStackParamList} from '../../navigation/routes';
 
 import {
   Tabs,
@@ -34,7 +33,7 @@ import {
 } from 'react-native-paper-tabs';
 
 
-type Props = StackScreenProps<RootStackParamList, 'Salon'>;
+type Props = StackScreenProps<RootStackParamList, 'Specialist'>;
 
 const generalOverlasy = {height: '100%', width: '100%', backgroundColor: Colors.black, opacity: 0.4, position: 'absolute'};
 const imageList = [
@@ -68,7 +67,7 @@ const galleryImages = [
   },
 ]
 
-const Salon: FunctionComponent<Props> = ({navigation, route}) => {
+const Specialist: FunctionComponent<Props> = ({navigation, route}) => {
   const [dashboardImg, setSalonImg] = useState<Object>(imageList[0]);
   const alertRef = useRef<alertRef>(null);
   const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
@@ -130,36 +129,39 @@ const Salon: FunctionComponent<Props> = ({navigation, route}) => {
               borderBottomWidth: Fonts.h(0)
             }}
           />
-          <View style={{flex: 1, justifyContent: 'flex-end', padding: Fonts.h(20)}}>
-            <TitleLabel
-              title="Trilon.ng Unisex Salon"
-              textStyle={{
-                fontWeight: 'bold',
-                fontSize: Fonts.h(20),
-                color: Colors.white
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', padding: Fonts.h(20)}}>
+            <View>
+              <TitleLabel
+                title="John Doe"
+                textStyle={{
+                  fontWeight: 'bold',
+                  fontSize: Fonts.h(20),
+                  color: Colors.white
+                }}
+              />
+              <Text style={styles.textBelow}>Barber at Trilon.ng</Text>
+              <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View style={{flexDirection: 'row', alignItems: 'center', marginRight: Fonts.w(10), marginTop: Fonts.h(5)}}>
+                    <RenderRatings
+                      totalStars={totalStars}
+                      colorOne={Colors.trilonO}
+                      colorTwo={Colors.white}
+                      size={Fonts.h(20)}
+                      margin={Fonts.w(3)}
+                    />
+                  </View>
+                  <Text style={[styles.textBelow, {marginTop: Fonts.h(5)}]}>(512 Reviews)</Text>
+                </View>
+              </View>
+            </View>
+            <Avatar
+              size={Fonts.h(100)}
+              rounded
+              source={{
+                uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn2.iconfinder.com%2Fdata%2Ficons%2Fmodern-avatars%2F600%2FmyAvatar10-512.png&f=1&nofb=1',
               }}
             />
-            <Text style={styles.textBelow}>Shop 123, The Place Mall, Lekki Phase 1, Lagos.</Text>
-            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={{flexDirection: 'row', alignItems: 'center', marginRight: Fonts.w(10), marginTop: Fonts.h(5)}}>
-                  <RenderRatings
-                    totalStars={totalStars}
-                    colorOne={Colors.trilonO}
-                    colorTwo={Colors.white}
-                    size={Fonts.h(20)}
-                    margin={Fonts.w(3)}
-                  />
-                </View>
-                <Text style={[styles.textBelow, {marginTop: Fonts.h(5)}]}>(512 Reviews)</Text>
-              </View>
-              <RNEButton
-                type="outline"
-                title="Open"
-                buttonStyle={{borderColor: Colors.trilonG, borderWidth: Fonts.w(1), paddingVertical: Fonts.h(2)}}
-                titleStyle={{fontSize: Fonts.h(12), color: Colors.trilonG}}
-              />
-            </View>
           </View>
         </ImageBackground>
         <View style={{flex: 1, paddingTop: Fonts.h(20)}}>
@@ -175,22 +177,18 @@ const Salon: FunctionComponent<Props> = ({navigation, route}) => {
               },
             }}
             mode="scrollable" // fixed, scrollable | default=fixed
-            showLeadingSpace={false}
+            showLeadingSpace={true}
           >
-            <TabScreen label="About">
-              <SalonAboutViewComponent
+            <TabScreen label="Basic Info">
+              <SpecialistViewComponent
                 navigation={navigation}
+                businessname="Trilon.ng"
                 about="A salon is a gathering of people held by an inspiring host. During the gathering they amuse one another and increase their knowledge through conversation. These gatherings often consciously followed Horace\'s definition of the aims of poetry, either to please or to educate"
                 address="Shop 123, Agbowo complex, Ibadan, Nigeria."
                 distance="1.0 km"
               />
             </TabScreen>
-            <TabScreen label="Services">
-              <SalonServicesViewComponent
-                navigation={navigation}
-              />
-            </TabScreen>
-            <TabScreen label="Gallery">
+            <TabScreen label="Portfolio">
               <ScrollableContainer style={{paddingHorizontal: Fonts.w(10)}}>
                 <MasonryList
                     images={[
@@ -282,4 +280,4 @@ const styles = StyleSheet.create({
   textBelow: {color: Colors.white, fontSize: Fonts.h(12), marginTop: Fonts.h(5), fontWeight: 'bold'},
 });
 
-export default Salon;
+export default Specialist;

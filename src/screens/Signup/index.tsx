@@ -94,7 +94,7 @@ const Signup: FunctionComponent<Props> = ({navigation}) => {
   }
 
   return (
-    <SafeAreaView style={[GlobalStyles.globalScreenBg, {marginTop: Fonts.h(-30), justifyContent: 'center'}]}>
+    <SafeAreaView style={[GlobalStyles.globalScreenBg, {justifyContent: 'center'}]}>
       <StatusBar
         barStyle='dark-content'
         backgroundColor='transparent'

@@ -4,14 +4,12 @@ import {Colors, Fonts} from '../common';
 import {Icon as RNEIcon, Card as RNECard, Button as RNEButton} from 'react-native-elements';
 import TitleLabel from '../components/TitleLabel';
 import ScrollableContainer from '../components/ScrollableContainer';
-import SalonMapViewComponent from '../components/SalonMapView';
-import SpecialistsRoundViewComponent from '../components/SpecialistsRoundView';
 
 
 type Props = {
   navigation;
   id?: number | string;
-  about?: string;
+  businessname?: string;
   address?: string;
   distance?: string;
   photos?: array;
@@ -21,10 +19,10 @@ type Props = {
   closeWeekendDay?: string;
 };
 
-const SalonAboutViewComponent: FunctionComponent<Props> = ({
+const SpecialistViewComponent: FunctionComponent<Props> = ({
   navigation = navigation,
   id,
-  about,
+  businessname = '',
   address,
   distance,
   photos = ['https://reactnative.dev/img/tiny_logo.png', 'https://reactnative.dev/img/tiny_logo.png', 'https://reactnative.dev/img/tiny_logo.png', 'https://reactnative.dev/img/tiny_logo.png', 'https://reactnative.dev/img/tiny_logo.png',],
@@ -38,62 +36,22 @@ const SalonAboutViewComponent: FunctionComponent<Props> = ({
   const [okMessage, setOkMessage] = useState<string>('');
 
   const [totalStars, setTotalStars] = useState<number>(4);
-  const [specialists, setSpecialists] = useState<array>([
-    {
-      source: require('../assets/images/specialist-1.jpg'),
-      name: 'John Max',
-      alias: 'Manicure'
-    },
-    {
-      source: require('../assets/images/specialist-2.jpg'),
-      name: 'Jessica Lyn',
-      alias: 'Pedicure'
-    },
-    {
-      source: require('../assets/images/specialist-1.jpg'),
-      name: 'John Max',
-      alias: 'Facial'
-    },
-    {
-      source: require('../assets/images/specialist-2.jpg'),
-      name: 'Jessica Lyn',
-      alias: 'Barbing'
-    },
-    {
-      source: require('../assets/images/specialist-1.jpg'),
-      name: 'John Max',
-      alias: 'Manicure'
-    },
-    {
-      source: require('../assets/images/specialist-2.jpg'),
-      name: 'Jessica Lyn',
-      alias: 'Spa'
-    },
-    {
-      source: require('../assets/images/specialist-1.jpg'),
-      name: 'John Max',
-      alias: 'Manicure'
-    },
-    {
-      source: require('../assets/images/specialist-2.jpg'),
-      name: 'Jessica Lyn',
-      alias: 'Salon'
-    },
-  ]);
 
   const [showFull, setShowFull] = useState<boolean>(false);
 
   const clickables = [
     {
-      icon: 'globe-outline',
-      label: 'Website',
+      icon: 'chatbubble-ellipses-outline',
+      label: 'Chat',
+      bgColor: Colors.wechat,
       onPress: () => {
-        Linking.openURL('https://idealswift.com');
+        navigation.navigate('ChatScreen');
       }
     },
     {
       icon: 'call-outline',
       label: 'Call',
+      bgColor: Colors.steam,
       onPress: async () => {
         // if (Platform.OS === 'ios') {
         //   phoneNumber = 'telprompt:${1234567890}';
@@ -105,41 +63,11 @@ const SalonAboutViewComponent: FunctionComponent<Props> = ({
       }
     },
     {
-      icon: 'compass-outline',
-      label: 'Direction',
+      icon: 'calendar-outline',
+      label: 'Book',
+      bgColor: Colors.flickr,
       onPress: async () => {
         await Linking.openURL('https://idealswift.com');
-      }
-    },
-    {
-      icon: 'share-outline',
-      label: 'Share',
-      onPress: async () => {
-        try {
-          const result = await Share.share({
-            message:
-              'Hello, I am inviting you to download the Trilon.ng unisex salon mobile app to enjoy premium salon related services.',
-              title: 'Invite friends'
-          }, {
-            dialogTitle: 'Trilon.ng'
-          });
-          if (result.action === Share.sharedAction) {
-            setOkMessage("Thank you for sharing Trilon.ng with your friend(s)");
-            setShowOkModal(true);
-            if (result.activityType) {
-              // shared with activity type of result.activityType
-
-            } else {
-              // shared
-            }
-          } else if (result.action === Share.dismissedAction) {
-            setErrormessage("Sharing action dismissed");
-            setShowErrorModal(true);
-          }
-        } catch (error) {
-          setErrormessage(error.message);
-          setShowErrorModal(true);
-        }
       }
     },
   ]
@@ -147,9 +75,6 @@ const SalonAboutViewComponent: FunctionComponent<Props> = ({
   useEffect(() => {
 
   }, []);
-
-  const aboutShort = about.substring(0, 100);
-  const aboutShort2 = about.substring(101, about.length - 1);
 
   return (
     <ScrollableContainer style={{paddingHorizontal: Fonts.w(10)}}>
@@ -161,53 +86,22 @@ const SalonAboutViewComponent: FunctionComponent<Props> = ({
                key={index.toString()}
                style={{alignItems: 'center'}}
              >
-               <RNEIcon name={click.icon} type='ionicon' color={Colors.trilonO} size={Fonts.h(35)} />
+               <RNEIcon name={click.icon} type='ionicon' color={Colors.white} containerStyle={{backgroundColor: click.bgColor, alignItems: 'center', justifyContent: 'center', padding: Fonts.w(10), borderRadius: Fonts.h(30)}} size={Fonts.h(30)} />
                <Text style={{color: Colors.darkText}}>{click.label}</Text>
              </TouchableOpacity>
            );
         })}
       </View>
-      <View style={styles.sectionContainer}>
+      <View style={{marginTop: Fonts.h(25)}}>
         <TitleLabel
-          title="Popular Specialists"
+          title="Business Name"
           textStyle={{
             fontWeight: 'bold',
-            fontSize: Fonts.h(20),
-            color: Colors.darkText
-          }}
-          containerStyle={{
-            marginLeft: Fonts.w(5),
-            marginTop: Fonts.h(25),
-            marginBottom: Fonts.h(10)
+            fontSize: Fonts.h(15),
+            color: Colors.black
           }}
         />
-        <FlatList
-          data={specialists}
-          horizontal={true}
-          renderItem={({ item }) => (
-            <SpecialistsRoundViewComponent
-              source={item.source}
-              name={item.name}
-              alias={item.alias}
-              pressed={() => navigation.navigate('Specialist')}
-            />
-          )}
-          keyExtractor={(item, index) => index.toString()}
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
-      <View style={{marginTop: Fonts.h(25)}}>
-        {!showFull ? (
-          <Text>{aboutShort}...</Text>
-        ) :
-          (
-            <Text>{about}</Text>
-          )
-        }
-        {!showFull ? (
-          <TouchableOpacity onPress={() => setShowFull(true)}><Text style={{color: Colors.trilonO}}>show more</Text></TouchableOpacity>
-        ) : null
-        }
+        <Text style={{marginTop: Fonts.h(5), color: Colors.darkText}}>{businessname}</Text>
       </View>
       <View style={{marginTop: Fonts.h(25)}}>
         <TitleLabel
@@ -252,7 +146,6 @@ const SalonAboutViewComponent: FunctionComponent<Props> = ({
               <Text style={{fontWeight: 'bold', marginHorizontal: Fonts.w(5), color: Colors.trilonO}}>Get Direction - {distance}</Text>
             </View>
           </View>
-          {/*}<SalonMapViewComponent />*/}
         </View>
         <View style={{marginTop: Fonts.h(25), marginLeft: Fonts.w(-5)}}>
           <TitleLabel
@@ -284,7 +177,6 @@ const SalonAboutViewComponent: FunctionComponent<Props> = ({
         <View style={{marginTop: Fonts.h(25)}}>
           <RNEButton
             title="Book"
-            onPress={ () => navigation.navigate('BookAppointment')}
             titleStyle={{fontSize: Fonts.h(12)}}
             buttonStyle={{backgroundColor: Colors.trilonO, height: Fonts.h(40), paddingHorizontal: Fonts.w(20), borderRadius: Fonts.h(20)}}
           />
@@ -299,4 +191,4 @@ const styles = StyleSheet.create({
   textBelow: {color: Colors.white, fontSize: Fonts.h(12), marginTop: Fonts.h(5), fontWeight: 'bold'},
 });
 
-export default SalonAboutViewComponent;
+export default SpecialistViewComponent;

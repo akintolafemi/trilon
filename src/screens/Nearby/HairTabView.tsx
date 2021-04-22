@@ -126,24 +126,34 @@ const HairTabView: FunctionComponent<Props> = ({navigation, route}) => {
             <SpecialistsRoundViewComponent
               source={item.source}
               name={item.name}
+              pressed={() => navigation.navigate('Specialist')}
             />
           )}
           keyExtractor={(item, index) => index.toString()}
           showsHorizontalScrollIndicator={false}
         />
-        <TitleLabel
-          title="Featured Salons"
-          textStyle={{
-            fontWeight: 'bold',
-            fontSize: Fonts.h(20),
-            color: Colors.darkText
-          }}
-          containerStyle={{
-            marginLeft: Fonts.w(5),
-            marginTop: Fonts.h(25),
-            marginBottom: Fonts.h(10)
-          }}
-        />
+        <View
+          style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: Fonts.h(25)}}
+        >
+          <TitleLabel
+            title="Featured Salons"
+            textStyle={{
+              fontWeight: 'bold',
+              fontSize: Fonts.h(20),
+              color: Colors.darkText
+            }}
+            containerStyle={{
+              marginLeft: Fonts.w(5),
+              marginBottom: Fonts.h(5)
+            }}
+          />
+          <TouchableOpacity
+            style={{color: Colors.darkText}}
+            onPress={() => navigation.navigate('ViewAll', {optionTitle: 'Featured Salons'})}
+          >
+            <Text style={{color: Colors.darkText, fontSize: Fonts.h(12)}}>View all</Text>
+          </TouchableOpacity>
+        </View>
         <FlatList
           data={salonsImages}
           horizontal={true}
@@ -160,19 +170,28 @@ const HairTabView: FunctionComponent<Props> = ({navigation, route}) => {
           showsHorizontalScrollIndicator={false}
           style={{marginHorizontal: Fonts.w(10)}}
         />
-        <TitleLabel
-          title="Salons Nearby"
-          textStyle={{
-            fontWeight: 'bold',
-            fontSize: Fonts.h(20),
-            color: Colors.darkText
-          }}
-          containerStyle={{
-            marginLeft: Fonts.w(5),
-            marginTop: Fonts.h(25),
-            marginBottom: Fonts.h(10)
-          }}
-        />
+        <View
+          style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: Fonts.h(25)}}
+        >
+          <TitleLabel
+            title="Salons Nearby"
+            textStyle={{
+              fontWeight: 'bold',
+              fontSize: Fonts.h(20),
+              color: Colors.darkText
+            }}
+            containerStyle={{
+              marginLeft: Fonts.w(5),
+              marginBottom: Fonts.h(5)
+            }}
+          />
+          <TouchableOpacity
+            style={{color: Colors.darkText}}
+            onPress={() => navigation.navigate('ViewAll', {optionTitle: 'Salons Nearby'})}
+          >
+            <Text style={{color: Colors.darkText, fontSize: Fonts.h(12)}}>View all</Text>
+          </TouchableOpacity>
+        </View>
         <SafeAreaView>
           <FlatList
             data={salonsImages}

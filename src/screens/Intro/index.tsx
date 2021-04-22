@@ -16,7 +16,7 @@ const viewList = [
     overlayStyles: {height: '100%', width: '100%', backgroundColor: Colors.black, opacity: 0.4, position: 'absolute'},
     titleStyles: {color: Colors.trilon, fontSize: 30, fontWeight: 'bold', },
     titleSMStyles: {color: Colors.white, fontSize: 14, fontWeight: 'normal', },
-    textBottomStyles: {color: Colors.whiteOpaq, fontSize: 13}
+    textBottomStyles: {color: Colors.whiteOpaq, fontSize: 11}
   },
   {
     source: require('../../assets/images/splash2.jpg'),
@@ -25,7 +25,7 @@ const viewList = [
     overlayStyles: {height: '100%', width: '100%', backgroundColor: Colors.black, opacity: 0.4, position: 'absolute'},
     titleStyles: {color: Colors.trilon, fontSize: 30, fontWeight: 'bold', },
     titleSMStyles: {color: Colors.white, fontSize: 14, fontWeight: 'normal', },
-    textBottomStyles: {color: Colors.whiteOpaq, fontSize: 13}
+    textBottomStyles: {color: Colors.whiteOpaq, fontSize: 11}
   },
   {
     source: require('../../assets/images/splash3.jpg'),
@@ -34,7 +34,7 @@ const viewList = [
     overlayStyles: {height: '100%', width: '100%', backgroundColor: Colors.black, opacity: 0.4, position: 'absolute'},
     titleStyles: {color: Colors.trilon, fontSize: 30, fontWeight: 'bold', },
     titleSMStyles: {color: Colors.white, fontSize: 14, fontWeight: 'normal', },
-    textBottomStyles: {color: Colors.whiteOpaq, fontSize: 13, alignSelf: 'center'}
+    textBottomStyles: {color: Colors.whiteOpaq, fontSize: 11, alignSelf: 'center'}
   },
 ];
 
@@ -90,7 +90,7 @@ const Intro: FunctionComponent<Props> = ({navigation, route}) => {
               style={{marginBottom: 20}}
             >
               <Text style={selectedView.textBottomStyles}>
-                @copyright 2021
+                @Trilon.ng 2021. All rights reserved
               </Text>
             </View>
           </View>

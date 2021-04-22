@@ -14,6 +14,7 @@ import TopServicesViewComponent from '../../components/TopServicesView';
 import SalonViewComponent from '../../components/SalonView';
 import {TopServices} from '../../common/Constants';
 import ScrollableContainer from '../../components/ScrollableContainer';
+import {NearbyParamList} from '../../navigation/BottomTabNavigator';
 
 import HairTabView from './HairTabView';
 
@@ -45,7 +46,7 @@ const Nearby: FunctionComponent<Props> = ({navigation, route}) => {
     } catch (err) {
       console.warn(err);
     }
-  }, [route]);
+  }, []);
 
   async function handleLocationAllow() {
     if (Platform.OS === 'ios') {
@@ -86,20 +87,25 @@ const Nearby: FunctionComponent<Props> = ({navigation, route}) => {
       <View style={{flex: 1, paddingTop: Fonts.h(50), paddingBottom: Fonts.h(10)}}>
         <View style={{paddingHorizontal: Fonts.w(15)}}>
           <Text style={{color: Colors.darkText, fontSize: Fonts.h(12)}}>Your location</Text>
-          <View style={{flexDirection: 'row', alignItems: 'center', marginTop: Fonts.h(2)}}>
-            <RNEIcon name="location" type='ionicon' color={Colors.trilonO} size={Fonts.h(15)} />
-            <Text style={{fontWeight: 'bold', marginHorizontal: Fonts.w(5)}}>Agbowo, Ibadan</Text>
-            <RNEIcon name="paper-plane" type='ionicon' color={Colors.trilonO} size={Fonts.h(15)} />
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: Fonts.h(2)}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <RNEIcon name="location" type='ionicon' color={Colors.trilonO} size={Fonts.h(15)} />
+              <Text style={{fontWeight: 'bold', marginHorizontal: Fonts.w(5)}}>Agbowo, Ibadan</Text>
+            </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <RNEIcon name="paper-plane-outline" type='ionicon' color={Colors.trilonO} size={Fonts.h(15)} />
+              <Text style={{fontWeight: 'bold', marginHorizontal: Fonts.w(5), color: Colors.trilonO}}>CHANGE</Text>
+            </View>
           </View>
           <SearchBar
             placeholder="Search for salon, services..."
             showLoading={true}
             containerStyle={{backgroundColor: 'transparent', borderTopWidth: Fonts.w(0), borderBottomWidth: Fonts.h(0), padding: Fonts.h(0), marginTop: Fonts.h(10),}}
-            inputContainerStyle={{backgroundColor: Colors.inputBg, borderRadius: Fonts.w(10), height: Fonts.h(40)}}
+            inputContainerStyle={{backgroundColor: Colors.inputBg, borderRadius: Fonts.w(10), height: Fonts.h(45)}}
             inputStyle={{}}
           />
         </View>
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, marginTop: Fonts.h(25)}}>
           <Tabs
             uppercase={false} // true/false | default=true | labels are uppercase
             showTextLabel={true} // true/false | default=false (KEEP PROVIDING LABEL WE USE IT AS KEY INTERNALLY + SCREEN READERS)
