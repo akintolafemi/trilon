@@ -15,6 +15,9 @@ import SalonViewComponent from '../../components/SalonView';
 import {TopServices} from '../../common/Constants';
 import ScrollableContainer from '../../components/ScrollableContainer';
 import {DashboardParamList} from '../../navigation/BottomTabNavigator';
+import LoadingModal from '../../components/LoadingModal';
+
+import {API} from '../../network';
 
 type Props = StackScreenProps<DashboardParamList, 'Dashboard'>;
 
@@ -38,39 +41,42 @@ const imageList = [
   },
 ];
 
-const salonsImages = [
-  {
-    id: '1',
-    source: require('../../assets/images/splash1.jpg'),
-    label: 'Label X',
-    rating: '3.5',
-    address: 'Shop 123, Agbowo complex, Ibadan'
-  },{
-    id: '2',
-    source: require('../../assets/images/splash2.jpg'),
-    label: 'Label Y',
-    rating: '4.0',
-    address: 'Address number 2, state Zee...'
-  },
-];
-
 const Dashboard: FunctionComponent<Props> = ({navigation, route}) => {
+  console.log(TopServices);
+
+  const [pageLoading, setPageLoading] = useState<boolean>(true);
   const [dashboardImg, setDashboardImg] = useState<Object>(imageList[0]);
   const alertRef = useRef<alertRef>(null);
   const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
   const [errorMessage, setErrormessage] = useState<string>('');
   const [showOkModal, setShowOkModal] = useState<boolean>(false);
   const [okMessage, setOkMessage] = useState<string>('');
+  const [topServices, setTopServices] = useState<array>([]);
+  const [bestSalons, setBestSalons] = useState<array>([]);
 
-  useEffect(() => {
-    const randomX = Math.floor(Math.random() * (3 - 0 + 1) + 0);
-    setDashboardImg(imageList[randomX]);
+  useEffect( async () => {
+
+    try {
+      let services = await API.getAvailableServices();
+      setTopServices(services);
+      let bestSalons = await API.getBestSalons(3.5);
+      console.log(bestSalons);
+
+      setBestSalons(bestSalons);
+      setPageLoading(false);
+    } catch (err) {
+      console.log(err);
+      setPageLoading(false);
+    }
+
 
     try{
+      const randomX = Math.floor(Math.random() * (3 - 0 + 1) + 0);
+      setDashboardImg(imageList[randomX]);
       PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
         .then((isLocationgranted) => {
           if (!isLocationgranted) {
-          //  alertRef.current?.showModal({title: 'Enable your Location', message: 'Please allow your location to serve you better', icon: 'location-pin'})
+            alertRef.current?.showModal({title: 'Enable your Location', message: 'Please allow your location to serve you better', icon: 'location-pin'})
           }
         })
     } catch (err) {
@@ -95,6 +101,8 @@ const Dashboard: FunctionComponent<Props> = ({navigation, route}) => {
           }
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log(PermissionsAndroid.RESULTS);
+
           setOkMessage("Trilon.ng can now access your location to serve you better");
           setShowOkModal(true);
         } else {
@@ -172,7 +180,7 @@ const Dashboard: FunctionComponent<Props> = ({navigation, route}) => {
             }}
           />
           <FlatList
-            data={TopServices}
+            data={topServices}
             horizontal={true}
             renderItem={({ item }) => (
               <TopServicesViewComponent
@@ -210,12 +218,12 @@ const Dashboard: FunctionComponent<Props> = ({navigation, route}) => {
             </TouchableOpacity>
           </View>
           <FlatList
-            data={salonsImages}
+            data={bestSalons}
             horizontal={true}
             renderItem={({ item }) => (
               <SalonViewComponent
-                source={item.source}
-                label={item.label}
+                source={item.gallery[0]}
+                label={item.name}
                 address={item.address}
                 rating={item.rating}
                 imageStyle={{height: Fonts.h(120)}}
@@ -250,12 +258,12 @@ const Dashboard: FunctionComponent<Props> = ({navigation, route}) => {
             </TouchableOpacity>
           </View>
           <FlatList
-            data={salonsImages}
+            data={bestSalons}
             horizontal={true}
             renderItem={({ item }) => (
               <SalonViewComponent
-                source={item.source}
-                label={item.label}
+                source={item.gallery[0]}
+                label={item.name}
                 address={item.address}
                 rating={item.rating}
                 imageStyle={{height: Fonts.h(120)}}
@@ -267,6 +275,7 @@ const Dashboard: FunctionComponent<Props> = ({navigation, route}) => {
           />
         </View>
       </ScrollableContainer>
+      <LoadingModal loading={pageLoading} />
       <AlertModal
         ref={alertRef}
         closeOnTouchOutside={true}

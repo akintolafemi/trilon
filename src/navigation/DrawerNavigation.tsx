@@ -8,6 +8,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 //Dashboard Screens
 import BottomTabNavigator from './BottomTabNavigator';
 import TrilonLibrary from '../screens/TrilonLibrary';
+import MapsScreen from '../screens/More/MapsScreen';
 
 import {
   DrawerStackParamList,
@@ -63,6 +64,18 @@ const MoreNavigation: FunctionComponent<Props> = ({navigation, route}) => {
           headerShown: false,
           gestureEnabled: false,
           drawerLabel: 'Library',
+          drawerIcon: ({focused}) => (
+            <RNEIcon name="newspaper-outline" type='ionicon' iconStyle={[{fontSize: Fonts.h(20)}, {color: focused ? Colors.white : Colors.darkText}]} />
+          )
+        }}
+      />
+      <Drawer.Screen
+        name='Maps'
+        component={MapsScreen}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+          drawerLabel: 'Location',
           drawerIcon: ({focused}) => (
             <RNEIcon name="newspaper-outline" type='ionicon' iconStyle={[{fontSize: Fonts.h(20)}, {color: focused ? Colors.white : Colors.darkText}]} />
           )

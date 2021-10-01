@@ -60,6 +60,18 @@ async function login(data: LoginRequest): Promise<any> {
   }
 }
 
+async function sendPasswordLink(emailAddress: string): Promise<any> {
+  try {
+    const response = await firebase
+      .auth()
+      .sendPasswordResetEmail(emailAddress);
+      return "sent";
+  } catch (err) {
+    console.log("There is something wrong!", err.message);
+    return err.message;
+  }
+}
+
 async function facebookLogin() {
   try {
     var provider = new firebase.auth.FacebookAuthProvider();
@@ -241,8 +253,43 @@ async function getUserProfile(): Promise<any> {
   }
 }
 
+async function getAvailableServices(): Promise<any> {
+  try {
+
+    let services = await firebase
+        .firestore()
+        .collection('trilon_ng_available_services')
+        .get();
+
+    return services.docs.map(doc => doc.data());
+  }
+  catch(error) {
+    console.log(error);
+    return [];
+  }
+}
+
+async function getBestSalons(rating): Promise<any> {
+  try {
+    let bestSalons = await firebase
+        .firestore()
+        .collection('trilon_ng_registered_salons')
+        .where('rating', '>=', rating)
+        .orderBy('rating', 'id')
+        .limit(20)
+        .get();
+
+    return bestSalons.docs.map(doc => doc.data());
+  }
+  catch(error) {
+    console.log(error);
+    return [];
+  }
+}
+
 export default {
   login,
+  sendPasswordLink,
   facebookLogin,
   googleLogin,
   registerUser,
@@ -251,4 +298,6 @@ export default {
   sendToken,
   verifyToken,
   getUserProfile,
+  getAvailableServices,
+  getBestSalons
 }

@@ -21,7 +21,7 @@ const TopServicesViewComponent: FunctionComponent<Props> = ({
     !isRow ? (
       <TouchableOpacity onPress={press} style={{padding: Fonts.w(5), alignItems: 'center'}}>
         <View style={{justifyContent: 'center', alignItems: 'center', borderRadius: Fonts.h(10), width: Fonts.h(70), height: Fonts.h(70), backgroundColor: color}}>
-          <Image source={source} style={{width: '60%', height: '60%'}} />
+          <Image source={{uri: source}} style={{width: '60%', height: '60%'}} />
         </View>
         <View style={{marginTop: Fonts.h(5), alignItems: 'center'}}>
           <Text style={{fontWeight: 'bold', fontSize: Fonts.h(15)}}>{label}</Text>

@@ -24,7 +24,7 @@ const SalonViewComponent: FunctionComponent<Props> = ({
 }) => {
   return (
     <RNECard containerStyle={[{width: Fonts.w(250), padding: Fonts.w(0), marginLeft: Fonts.w(0), marginTop: Fonts.w(5), borderRadius: Fonts.h(10)}, containerStyle]}>
-      <RNECard.Image source={source} style={[{borderTopLeftRadius: Fonts.h(10), borderTopRightRadius: Fonts.h(10)}, imageStyle]}/>
+      <RNECard.Image source={{uri: source}} style={[{borderTopLeftRadius: Fonts.h(10), borderTopRightRadius: Fonts.h(10)}, imageStyle]}/>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: Fonts.w(15), paddingTop: Fonts.h(5)}}>
         <View>
           <Text style={{fontWeight: 'bold', fontSize: Fonts.h(15)}}>{label}</Text>

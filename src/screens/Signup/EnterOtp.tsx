@@ -158,7 +158,7 @@ const EnterOtp: FunctionComponent<Props> = ({navigation, route}) => {
         onConfirm={() => {
           setShowOkModal(false);
           if (count === '1')
-            navigation.navigate('DashboardTab');
+            navigation.navigate('Drawer');
         }}
       />
     </SafeAreaView>

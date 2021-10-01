@@ -21,6 +21,7 @@ const OnboardMain: FunctionComponent<Props> = ({navigation}) => {
   const modalizeRef = useRef<Modalize>(null);
   const alertRef = useRef<alertRef>(null);
   const [showOkModal, setShowOkModal] = useState<boolean>(false);
+  const [okMessage, setOkMessage] = useState<string>('');
   const [modalView, setModalView] = useState<string>('login');
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -42,6 +43,26 @@ const OnboardMain: FunctionComponent<Props> = ({navigation}) => {
 
   function closeOkModal() {
     setShowOkModal(false);
+  }
+
+  async function sendPasswordLink() {
+    if(email === "") {
+      setErrormessage("Enter your email");
+      setShowErrorModal(true);
+    }
+    else {
+      setIsLoading(true);
+      let res = await API.sendPasswordLink(email);
+      setIsLoading(false);
+      if (res === "sent"){
+        setOkMessage('Please check your email address, we mailed you a password reset link. Thank you');
+        setOkMessage(true);
+      }
+      else{
+        setErrormessage(response.toString());
+        setShowErrorModal(true);
+      }
+    }
   }
 
   async function handleLogin() {
@@ -226,6 +247,7 @@ const OnboardMain: FunctionComponent<Props> = ({navigation}) => {
               <RNEButton
                 title='Login'
                 loading={isLoading}
+//                onPress={handleLogin}
                 onPress={() => navigation.navigate('Drawer')}
                 buttonStyle={[styles.socialBtn, {backgroundColor: Colors.trilon, height: Fonts.h(50), marginHorizontal: Fonts.w(10), marginTop: Fonts.h(0)}]}
               />
@@ -254,6 +276,8 @@ const OnboardMain: FunctionComponent<Props> = ({navigation}) => {
               />
               <RNEButton
                 title='Submit'
+                loading={isLoading}
+                onPress={sendPasswordLink}
                 buttonStyle={[styles.socialBtn, {backgroundColor: Colors.trilon, height: Fonts.h(50), marginHorizontal: Fonts.w(10), marginTop: Fonts.h(0)}]}
               />
               <View
@@ -275,8 +299,7 @@ const OnboardMain: FunctionComponent<Props> = ({navigation}) => {
         onConfirm={() => setShowErrorModal(false)}
       />
       <OkModal
-        title='Welcome'
-        message='Hello.... your message was received'
+        message={okMessage}
         showModal={showOkModal}
         onConfirm={closeOkModal}
       />
